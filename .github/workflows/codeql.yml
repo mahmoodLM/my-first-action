@@ -1,0 +1,29 @@
+name: "CodeQL Security Analysis"
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  analyze:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+
+    steps:
+      # 1. جلب الكود من المستودع
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. تهيئة أداة CodeQL لفحص لغة Python
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: python
+
+      # 3. تشغيل التحليل واستخراج النتائج
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
