@@ -1,13 +1,8 @@
 import os
 import sys
 
-def run_system_command():
-    # استقبال العنصر الأول من مدخلات المستخدم كـ String (Source)
-    user_input = sys.argv[1]
-    
-    # ثغرة حقن الأوامر الصريحة (Sink: CWE-78)
-    os.system("ping -c 1 " + user_input)
+# استقبال مدخلات المستخدم الصريحة (Source)
+user_command = sys.argv[1]
 
-if __name__ == "__main__":
-    if len(sys.argv) > 1:
-        run_system_command()
+# تنفيذ أمر النظام المباشر دون تنقية (Sink: Command Injection)
+os.system("ls -la " + user_command)
