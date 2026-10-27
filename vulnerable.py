@@ -1,8 +1,9 @@
 import os
 import sys
 
-# استقبال مدخلات المستخدم الصريحة (Source)
-user_command = sys.argv[1]
-
-# تنفيذ أمر النظام المباشر دون تنقية (Sink: Command Injection)
-os.system("ls -la " + user_command)
+# التأكد من وجود مدخل نصي صريح من المستخدم (sys.argv[1] is a string)
+if len(sys.argv) > 1:
+    user_input = sys.argv[1]
+    
+    # ثغرة حقن الأوامر الصريحة (Command Injection - CWE-78)
+    os.system("ping -c 1 " + user_input)
